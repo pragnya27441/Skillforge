@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - SkillForge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <span class="logo gradient-text">SKILL FORGE</span>
+
+            <ul class="nav-links">
+                <li><a href="index.html#top" class="home-link">Home</a></li>
+                <li><a href="index.html#discover">Discover</a></li>
+                <li><a href="index.html#opportunities">Opportunities</a></li>
+                <li><a href="index.html#collaborate">Collaborate</a></li>
+                <li><a href="index.html#learn">Learn</a></li>
+                <li><a href="index.html#events">Events</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <!-- Search -->
+                <div class="nav-item search-container">
+                    <button id="searchBtn" class="icon-btn" aria-label="Search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <div id="searchDropdown" class="dropdown glass hidden">
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="searchInput" placeholder="Search categories, creators, gigs..."
+                                autofocus>
+                            <button id="performSearchBtn" class="search-action-btn" title="Search"><i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </div>
+                        <div class="search-filters">
+                            <span class="filter-tag active">All</span>
+                            <span class="filter-tag">Creators</span>
+                            <span class="filter-tag">Gigs</span>
+                        </div>
+                        <div id="searchResults" class="search-results hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="nav-item notification-container">
+                    <button id="notifBtn" class="icon-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <div id="notifDropdown" class="dropdown glass hidden">
+                        <div class="dropdown-header">
+                            <h3>Notifications</h3>
+                            <span class="mark-read">Mark all read</span>
+                        </div>
+                        <ul class="notif-list">
+                            <li class="notif-item unread">
+                                <div class="notif-icon"><i class="fa-solid fa-trophy"></i></div>
+                                <div class="notif-content">
+                                    <p class="notif-title">New Achievement!</p>
+                                    <p class="notif-msg">You unlocked "Rising Star"</p>
+                                    <span class="notif-time">2m ago</span>
+                                </div>
+                            </li>
+                            <li class="notif-item unread">
+                                <div class="notif-icon"><i class="fa-solid fa-briefcase"></i></div>
+                                <div class="notif-content">
+                                    <p class="notif-title">Job Match</p>
+                                    <p class="notif-msg">New micro-gig available for Dance</p>
+                                    <span class="notif-time">1h ago</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Portfolio Builder Button -->
+                <button id="uploadBtn" class="btn btn-primary">
+                    <i class="fa-solid fa-address-card"></i> Build Portfolio
+                </button>
+
+                <!-- Profile Placeholder -->
+                <!-- <a id="myProfileLink" href="#"></a>
+                    <div class="profile-avatar">
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile">
+                    </div>
+                </a> -->
+                <!-- Profile Avatar -->
+                <a id="myProfileLink" href="#">
+                <div class="profile-avatar">
+                    <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile">
+                </div>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Content -->
+    <main class="main-content">
+        <section class="profile-section section-padding">
+            <div class="container">
+                <div class="profile-header glass">
+                    <div class="profile-avatar-large">
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile">
+                    </div>
+                    <div class="profile-info">
+
+    <h1 id="name" class="gradient-text"></h1>
+
+    <h3 id="niche"></h3>
+
+    <div style="margin-top:15px; display:flex; gap:10px;">
+
+        <button id="messageBtn" class="btn btn-primary">
+            <i class="fa-solid fa-paper-plane"></i>
+            Message
+        </button>
+
+        <button id="connectBtn" class="btn btn-secondary">
+            <i class="fa-solid fa-user-plus"></i>
+            Connect
+        </button>
+
+    </div>
+
+</div>
+                </div>
+
+                <div class="profile-grid">
+                    <div class="profile-card glass">
+                        <h3><i class="fa-solid fa-user"></i> About Me</h3>
+                        <p id="bio"></p>
+                    </div>
+
+                    <div class="profile-card glass">
+                        <h3><i class="fa-solid fa-lightbulb"></i> Skills</h3>
+                        <p id="skills"></p>
+                    </div>
+
+                    <div class="profile-card glass">
+                        <h3><i class="fa-solid fa-tools"></i> Tools</h3>
+                        <p id="tools"></p>
+                    </div>
+
+                    <div class="profile-card glass">
+                        <h3><i class="fa-solid fa-star"></i> Best Project</h3>
+                        <p id="project"></p>
+                    </div>
+
+                    <div class="profile-card glass">
+                        <h3><i class="fa-solid fa-trophy"></i> Milestone</h3>
+                        <p id="milestone"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <section class="post-section section-padding">
+    <div class="container">
+        <!-- <div class="glass" style="padding:20px;">
+            <h3>Create Post</h3>
+
+            <input type="file" id="postFile" accept="image/*,video/*">
+            <textarea id="postCaption" placeholder="Write something..."></textarea>
+
+            <button id="postBtn" class="btn btn-primary">Post</button>
+        </div> -->
+        <div class="post-wrapper">
+
+    <!-- TEXT POST -->
+    <div class="glass post-box">
+        <h3>Write a Post</h3>
+        <textarea id="textPost" placeholder="What's on your mind?"></textarea>
+        <button id="textPostBtn" class="btn btn-primary">Post Text</button>
+    </div>
+
+    <!-- IMAGE POST -->
+    <!-- <div class="glass post-box">
+        <h3>Upload Image / Video</h3>
+        <input type="file" id="mediaPost" accept="image/*,video/*">
+        <button id="mediaPostBtn" class="btn btn-primary">Post Media</button>
+    </div> -->
+    <div class="glass post-box">
+    <h3>Upload Image / Video</h3>
+
+    <input type="file" id="mediaPost" accept="image/*,video/*">
+
+    <textarea id="mediaCaption" placeholder="Write a caption (optional)..."></textarea>
+
+    <button id="mediaPostBtn" class="btn btn-primary">Post Media</button>
+</div>
+
+  </div>
+
+        <!-- <div id="postsContainer"></div> -->
+         <div id="postsContainer" class="posts-grid"></div>
+    </div>
+</section>
+
+        <!-- <script type="module" src="profile.js"></script> -->
+         <!-- <script type="module" src="profile.js" defer></script> -->
+          <script type="module" src="profile.js"></script>
+         <script>
+        const currentUser = localStorage.getItem("currentUser");
+
+        if (currentUser) {
+            document.getElementById("myProfileLink").href = 
+                `profile.html?id=${encodeURIComponent(currentUser)}`;
+        }
+    </script>
+
+
+</body>
+</html>

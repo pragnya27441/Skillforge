@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.login-container {
+    background: rgba(255, 255, 255, 0.9) url('images/background.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+.login-container img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 2px solid #764ba2;
+}
+.login-container h2 {
+    margin-bottom: 1rem;
+    color: #333;
+    font-weight: 600;
+}
+.login-container input {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.login-container button:hover {
+    background: linear-gradient(135deg, #5a6fd8, #6a4190);
+}
+#loginError {
+    color: red;
+    margin-top: 0.5rem;
+}
+.login-container p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+.login-container a {
+    color: #667eea;
+    text-decoration: none;
+}
+.login-container a:hover {
+    text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <input id="loginEmail" type="email" placeholder="Email">
+    <input id="loginPassword" type="password" placeholder="Password">
+    <button id="doLogin">Login</button>
+    <p id="loginError"></p>
+    <p>Don't have an account? <a href="register.html">Register here</a></p>
+</div>
+
+<script type="module">
+import { database, ref, get, child } from './firebase.js';
+
+const loginBtn = document.getElementById("doLogin");
+const loginError = document.getElementById("loginError");
+
+loginBtn.addEventListener("click", () => {
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+
+    if (!email || !password) {
+        loginError.textContent = "Please enter email and password";
+        return;
+    }
+
+    const userId = email.replace('.', '_');
+
+    get(child(ref(database), 'users/' + userId))
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            const userData = snapshot.val();
+            if (userData.password === password) {
+                loginError.textContent = "";
+                alert("Login successful!");
+                window.location.href = "index.html";
+            } else {
+                loginError.textContent = "Incorrect password!";
+            }
+        } else {
+            loginError.textContent = "User not found!";
+        }
+    }).catch(() => {
+        loginError.textContent = "Error reading database!";
+    });
+});
+</script>
+<script type="module" src="login.js"></script>
+</body>
+</html>

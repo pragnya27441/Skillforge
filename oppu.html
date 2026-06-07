@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>SkillForge Opportunities</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <span class="logo gradient-text">SKILL FORGE</span>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="oppu.html">Opportunities</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Add Opportunity Modal -->
+<div id="opportunityModal" class="modal-overlay hidden">
+    <div class="modal glass portfolio-modal">
+
+        <button id="closeOpportunityModal" class="close-modal">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-header-text">
+            <h2>Add New Opportunity</h2>
+            <p>Fill details to create a new opportunity card</p>
+        </div>
+
+        <div class="form-group">
+            <label>Opportunity Title</label>
+            <input type="text" id="oppTitle" class="input-field">
+        </div>
+
+        <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" id="oppCompany" class="input-field">
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea id="oppDescription" class="input-field textarea"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Budget</label>
+            <input type="text" id="oppBudget" class="input-field">
+        </div>
+
+        <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="oppLocation" class="input-field">
+        </div>
+
+        <div class="form-group">
+            <label>Level</label>
+            <select id="oppLevel" class="input-field">
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <select id="oppCategory" class="input-field">
+                <option>Dance</option>
+                <option>Music</option>
+                <option>Visual Art</option>
+                <option>Photography</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Skills (comma separated)</label>
+            <input type="text" id="oppSkills" class="input-field"
+                placeholder="Ex: choreography, stage presence">
+        </div>
+
+        <button id="saveOpportunityBtn" class="btn btn-primary full-width">
+            Add Opportunity
+        </button>
+
+    </div>
+</div>
+
+    <!-- Opportunities Section -->
+    <section class="container section-padding">
+        <div class="view-header">
+            <h2 class="view-title">
+                Matched <span class="highlight-text">Opportunities</span>
+            </h2>
+            <p class="view-subtitle">
+                Opportunities based on your portfolio skills
+            </p>
+        </div>
+        <div class="add-opportunity-section">
+    <button id="openOpportunityModal" class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i> Add Opportunity
+    </button>
+</div>
+
+        <div id="opportunitiesContainer" class="gigs-grid"></div>
+    </section>
+
+    <script type="module" src="opportunities.js"></script>
+</body>
+</html>

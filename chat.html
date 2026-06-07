@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillForge Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <span class="logo gradient-text" style="cursor: pointer;" onclick="window.location.href='discover.html'">
+                SKILL FORGE
+            </span>
+        </div>
+    </nav>
+
+    <div class="chat-page">
+        <div class="chat-container container glass">
+            
+            <div class="chat-sidebar">
+                <div class="sidebar-header">
+                    <i class="fa-solid fa-inbox"></i> Messages
+                </div>
+                <div id="inboxList" class="inbox-list"></div>
+            </div>
+
+            <div class="chat-box" id="chatBoxContainer">
+                <div id="noChatSelected" class="no-chat-selected">
+                    <i class="fa-solid fa-comments"></i>
+                    <p>Select a connection to view or start a conversation.</p>
+                </div>
+
+                <div id="activeChatWindow" class="active-chat-window hidden">
+                    <div class="chat-header" id="activeChatHeader">
+                        <div class="chat-header-left">
+                            <span id="activeHeaderName">Chat Session</span>
+                        </div>
+                        <button id="viewProfileBtn" class="btn-view-profile">
+                            <i class="fa-solid fa-user"></i> View Profile
+                        </button>
+                    </div>
+                    
+                    <div id="messages" class="messages"></div>
+                    <div class="chat-input-area">
+                        <input type="text" id="messageInput" placeholder="Type a message...">
+                        <button id="sendBtn" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module" src="chat.js"></script>
+</body>
+</html>

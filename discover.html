@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover - SkillForge</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar glass">
+    <div class="container nav-container">
+        <span class="logo gradient-text">SKILL FORGE</span>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="discover.html" class="active">Discover</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- MAIN -->
+<main>
+
+<section class="container section-padding">
+
+    <!-- HEADER -->
+    <div class="view-header">
+        <h2 class="view-title">
+            Featured <span class="highlight-text">Creators</span>
+        </h2>
+        <p class="view-subtitle">
+            Discover talented artists and their verified skill profiles
+        </p>
+    </div>
+    <div class="discover-search">
+    <input
+        type="text"
+        id="creatorSearch"
+        placeholder="Search creators, skills, niches..."
+    >
+</div>
+
+<div id="creatorsContainer" class="creators-grid"></div>
+    
+
+    <!-- 👇 ADD HERE -->
+    <div class="view-header">
+    <h2>Latest Posts</h2>
+    </div>
+
+    <!-- <div id="discoverPosts"></div> -->
+     <div id="discoverPosts" class="creators-grid"></div>
+
+    
+
+</section>
+
+</main>
+
+<!-- CONNECT JS -->
+<script type="module" src="discover.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "name": "John Doe",
+      "niche": "Web Development",
+      "bio": "Full-stack developer focused on modern web apps.",
+      "skills": ["HTML", "CSS", "JavaScript", "React"],
+      "tools": ["VS Code", "Git", "Figma"],
+      "projects": [
+        {
+          "title": "Portfolio Website",
+          "milestone": "Deployed on Netlify"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillForge - Transform Your Passion Into Success</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="container nav-container">
+            <span class="logo gradient-text">SKILL FORGE</span>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="discover.html">Discover</a></li>
+                <li><a href="oppu.html">Opportunities</a></li>
+                <li><a href="#collaborate">Collaborate</a></li>
+                <li><a href="#learn">Learn</a></li>
+                <li><a href="#events">Events</a></li>
+            </ul>
+
+            <div class="nav-actions">
+
+<!-- Notifications -->
+<div class="nav-item notification-container">
+
+    <button id="notifBtn" class="icon-btn">
+        <i class="fa-regular fa-bell"></i>
+        <span class="badge" id="notifCount">0</span>
+    </button>
+
+    <!-- Overlay -->
+    <div id="notifOverlay" class="modal-overlay hidden">
+
+        <!-- Modal Box -->
+        <div class="notif-modal">
+
+            <!-- Header -->
+            <div class="notif-header">
+                <h2>Notifications</h2>
+                <span id="closeNotifModal" class="close-btn">✖</span>
+            </div>
+
+            <!-- Body -->
+            <div id="notifList" class="notif-body"></div>
+
+            <!-- Empty -->
+            <div id="emptyNotif" class="empty-notif hidden"></div>
+
+        </div>
+    </div>
+</div>
+<!-- Messages -->
+<div class="nav-item">
+    <a href="chat.html" class="icon-btn">
+        <i class="fa-solid fa-comments"></i>
+        <span class="badge" id="msgCount">0</span>
+    </a>
+</div>
+                <!-- Portfolio Builder Button -->
+                <button id="uploadBtn" class="btn btn-primary">
+                    <i class="fa-solid fa-address-card"></i> Build Portfolio
+                </button>
+                <!-- ✅ Logout Button HERE -->
+                <button id="logoutBtn" class="btn btn-secondary">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+
+                <!-- Profile Placeholder -->
+                <a id="myProfileLink" href="#">
+    <div class="profile-avatar">
+        <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Profile">
+    </div>
+</a>
+
+<script>
+const email = localStorage.getItem("loggedInEmail");
+
+if (email) {
+    const userId = email.replace(/\./g, "_");
+    document.getElementById("myProfileLink").href =
+        `profile.html?id=${userId}`;
+}
+</script>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Views -->
+    <main class="main-content">
+
+        <!-- Landing View -->
+        <div id="landing-view" class="view-section active">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-bg-glow"></div>
+                <div class="container hero-content">
+                    <h1 class="hero-title gradient-text">Transform Your Passion<br>Into Success</h1>
+                    <p class="hero-subtitle">Upload your hobby work. Build a verified
+                        profile, find gigs, and collaborate with creators worldwide.</p>
+                    <div class="hero-cta">
+                        <button class="btn btn-primary btn-large">Start Your Journey</button>
+                    </div>
+                </div>
+            </section>
+        <!-- categories section -->
+            <section class="categories section-padding">
+    <div class="container">
+        <h2 class="section-title">Explore Talents</h2>
+        <div class="categories-grid">
+            <div class="category-card glass" data-category="Music">
+                <div class="cat-icon gradient-icon-1"><i class="fa-solid fa-music"></i></div>
+                <h3>Music</h3>
+
+            </div>
+            <div class="category-card glass" data-category="Visual Art">
+                <div class="cat-icon gradient-icon-2"><i class="fa-solid fa-palette"></i></div>
+                <h3>Visual Art</h3>
+            </div>
+            <div class="category-card glass" data-category="Dance">
+                <div class="cat-icon gradient-icon-3"><i class="fa-solid fa-person-dancing"></i></div>
+                <h3>Dance</h3>
+            </div>
+            <div class="category-card glass" data-category="Photography">
+                <div class="cat-icon gradient-icon-4"><i class="fa-solid fa-camera"></i></div>
+                <h3>Photography</h3>
+        
+            </div>
+        </div>
+        <!-- Container to display filtered creators -->
+        <div id="creatorsContainer" class="creators-grid section-padding"></div>
+    </div>
+</section>
+
+            <!-- Video Modal -->
+            <div id="videoModal" class="modal-overlay hidden">
+                <div class="modal glass video-modal-content">
+                    <button id="closeVideo" class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+                    <div class="video-container">
+                        <h2 id="videoTitle">Featured Creators</h2>
+
+                        <!-- Main Feed Grid -->
+                        <!-- Removed main player, using grid as primary view -->
+                        <div class="video-feed-section">
+                            <div class="video-feed-grid" id="videoFeedGrid">
+                                <!-- Populated by JS: Grid of playing cards -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- How It Works Section -->
+            <section id="how-it-works" class="how-it-works section-padding">
+                <div class="container">
+                    <h2 class="section-title">How SkillForge Works</h2>
+                    <div class="features-grid">
+                        <div class="feature-card glass">
+                            <div class="step-badge">1</div>
+                            <div class="feature-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                            <h3>Upload Work</h3>
+                            <p>Share your videos, art, or audio files.</p>
+                        </div>
+                        <div class="feature-card glass">
+                            <div class="step-badge">2</div>
+                            <div class="feature-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                            <h3>AI Analysis</h3>
+                            <p>Get detailed skill scores and feedback.</p>
+                        </div>
+                        <div class="feature-card glass">
+                            <div class="step-badge">3</div>
+                            <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <h3>Track Growth</h3>
+                            <p>Visualize improvements over time.</p>
+                        </div>
+                        <div class="feature-card glass">
+                            <div class="step-badge">4</div>
+                            <div class="feature-icon"><i class="fa-solid fa-handshake"></i></div>
+                            <h3>Get Matched</h3>
+                            <p>Unlock gigs and collaborations.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Opportunities View -->
+        <div id="opportunities-view" class="view-section hidden container section-padding">
+            <div class="view-header">
+                <h2 class="view-title">Matched <span class="highlight-text">Opportunities</span></h2>
+                <p class="view-subtitle">Gigs and projects tailored to your skill level and style</p>
+            </div>
+
+            <div class="gigs-grid">
+                <!-- Gig Card 1 -->
+                <div class="gig-card glass">
+                    <div class="gig-header">
+                        <div class="tags-row">
+                            <span class="pill pill-blue">Intermediate</span>
+                            <span class="pill pill-dark">Dance</span>
+                        </div>
+                        <div class="match-score">
+                            <i class="fa-solid fa-star"></i> 94% <span class="match-label">Match</span>
+                        </div>
+                    </div>
+                    <h3>Wedding Dance Performance</h3>
+                    <p class="company-name">Elite Events Co.</p>
+                    <p class="gig-desc">Looking for contemporary dancers for an upscale wedding reception in downtown
+                        LA. 2-hour performance with potential for recurring bookings.</p>
+                    <div class="gig-meta">
+                        <span><i class="fa-solid fa-dollar-sign"></i> $500-800</span>
+                        <span><i class="fa-solid fa-location-dot"></i> Los Angeles, CA</span>
+                        <span><i class="fa-regular fa-clock"></i> Feb 15</span>
+                    </div>
+                    <div class="skill-tags">
+                        <span>Contemporary</span>
+                        <span>Improvisation</span>
+                        <span>Stage presence</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary full-width">Apply</button>
+                        <button class="btn btn-secondary">Save</button>
+                    </div>
+                </div>
+
+                <!-- Gig Card 2 -->
+                <div class="gig-card glass">
+                    <div class="gig-header">
+                        <div class="tags-row">
+                            <span class="pill pill-purple">Advanced</span>
+                            <span class="pill pill-dark">Visual Art</span>
+                        </div>
+                        <div class="match-score">
+                            <i class="fa-solid fa-star"></i> 87% <span class="match-label">Match</span>
+                        </div>
+                    </div>
+                    <h3>Album Cover Art</h3>
+                    <p class="company-name">Indie Record Label</p>
+                    <p class="gig-desc">Create unique album artwork for upcoming indie folk release. Looking for
+                        painters with a dreamlike, ethereal style.</p>
+                    <div class="gig-meta">
+                        <span><i class="fa-solid fa-dollar-sign"></i> $1,200</span>
+                        <span><i class="fa-solid fa-globe"></i> Remote</span>
+                        <span><i class="fa-regular fa-clock"></i> Mar 1</span>
+                    </div>
+                    <div class="skill-tags">
+                        <span>Digital art</span>
+                        <span>Surrealism</span>
+                        <span>Color theory</span>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary full-width">Apply</button>
+                        <button class="btn btn-secondary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collaborate View -->
+        <div id="collaborate-view" class="view-section hidden container section-padding">
+            <div class="view-header">
+                <div>
+                    <h2 class="view-title">Find Your <span class="highlight-text">Creative Partner</span></h2>
+                    <p class="view-subtitle">Connect with complementary creators — dancers meet musicians, painters find
+                        poets. Build something amazing together.</p>
+                </div>
+            </div>
+
+            <div class="collab-grid">
+                <!-- Collab Card 1 -->
+                <div class="collab-card glass">
+                    <div class="card-header">
+                        <div class="creator-info">
+                            <div class="avatar-circle">SM</div>
+                            <div>
+                                <h3>Sofia Martinez <span class="score-badge">87</span></h3>
+                                <p><i class="fa-solid fa-video"></i> Hip-Hop Dance</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="looking-for-block">
+                        <span class="looking-label">Looking for:</span> Musicians for choreography collab
+                    </div>
+                    <div class="skill-tags">
+                        <span>Dance</span>
+                        <span>Music Videos</span>
+                        <span>Choreography</span>
+                    </div>
+                    <button class="btn btn-outline full-width"><i class="fa-regular fa-comment"></i> Connect</button>
+                </div>
+
+                <!-- Collab Card 2 -->
+                <div class="collab-card glass">
+                    <div class="card-header">
+                        <div class="creator-info">
+                            <div class="avatar-circle bg-2">JL</div>
+                            <div>
+                                <h3>Jordan Lee <span class="score-badge">91</span></h3>
+                                <p><i class="fa-solid fa-music"></i> Jazz Piano</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="looking-for-block">
+                        <span class="looking-label">Looking for:</span> Dancers for live performance piece
+                    </div>
+                    <div class="skill-tags">
+                        <span>Jazz</span>
+                        <span>Live Performance</span>
+                        <span>Improvisation</span>
+                    </div>
+                    <button class="btn btn-outline full-width"><i class="fa-regular fa-comment"></i> Connect</button>
+                </div>
+
+                <!-- Collab Card 3 -->
+                <div class="collab-card glass">
+                    <div class="card-header">
+                        <div class="creator-info">
+                            <div class="avatar-circle bg-3">EK</div>
+                            <div>
+                                <h3>Elena Kowalski <span class="score-badge">84</span></h3>
+                                <p><i class="fa-solid fa-palette"></i> Abstract Painting</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="looking-for-block">
+                        <span class="looking-label">Looking for:</span> Photographers for mixed media project
+                    </div>
+                    <div class="skill-tags">
+                        <span>Abstract</span>
+                        <span>Mixed Media</span>
+                        <span>Gallery</span>
+                    </div>
+                    <button class="btn btn-outline full-width"><i class="fa-regular fa-comment"></i> Connect</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learn View -->
+        <div id="learn-view" class="view-section hidden container section-padding">
+            <div class="view-header">
+                <div>
+                    <h2 class="view-title">Level Up Your <span class="highlight-text">Skills</span></h2>
+                    <p class="view-subtitle">Learn from top-rated creators with verified expertise. Take courses that
+                        directly improve your AI skill scores.</p>
+                </div>
+            </div>
+
+            <div class="gigs-grid"> <!-- Reusing grid layout -->
+
+                <!-- Course Card 1 -->
+                <div class="course-card glass course-orange">
+                    <div class="course-header">
+                        <div class="tags-row">
+                            <span class="pill pill-dark">Dance</span>
+                            <span class="pill pill-light">New</span>
+                        </div>
+                        <span class="pill pill-dark-trans">Intermediate</span>
+                    </div>
+                    <div class="course-meta-top">
+                        <span><i class="fa-solid fa-play"></i> 24 lessons</span>
+                        <span><i class="fa-regular fa-clock"></i> 8 hours</span>
+                    </div>
+                    <h3>Master Contemporary Dance Techniques</h3>
+                    <div class="instructor-row">
+                        <div class="avatar-small">MC</div>
+                        <div class="inst-info">
+                            <span class="name">Maya Chen</span>
+                            <span class="score"><i class="fa-solid fa-trophy"></i> Score: 92</span>
+                        </div>
+                    </div>
+                    <div class="skill-tags mini-tags">
+                        <span><i class="fa-solid fa-arrow-trend-up"></i> Fluidity</span>
+                        <span><i class="fa-solid fa-arrow-trend-up"></i> Expression</span>
+                        <span><i class="fa-solid fa-arrow-trend-up"></i> Technique</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.9</div>
+                        <div class="enrolled"><i class="fa-solid fa-user-group"></i> 1,247 enrolled</div>
+                    </div>
+                    <button class="btn btn-light full-width"><i class="fa-solid fa-book-open"></i> Start
+                        Learning</button>
+                </div>
+
+                <!-- Course Card 2 -->
+                <div class="course-card glass width-fix"> <!-- Using default styles + overrides -->
+                    <div class="course-header">
+                        <div class="tags-row">
+                            <span class="pill pill-dark">Visual Art</span>
+                        </div>
+                    </div>
+                    <div class="course-meta-top">
+                        <span><i class="fa-solid fa-play"></i> 18 lessons</span>
+                        <span><i class="fa-regular fa-clock"></i> 5 hours</span>
+                    </div>
+                    <h3>Color Theory for Digital Artists</h3>
+                    <div class="instructor-row">
+                        <div class="avatar-small bg-2">AR</div>
+                        <div class="inst-info">
+                            <span class="name">Alex Rivera</span>
+                            <span class="score"><i class="fa-solid fa-trophy"></i> Score: 88</span>
+                        </div>
+                    </div>
+                    <div class="skill-tags mini-tags">
+                        <span><i class="fa-solid fa-arrow-trend-up"></i> Color Harmony</span>
+                        <span><i class="fa-solid fa-arrow-trend-up"></i> Composition</span>
+                        <span><i class="fa-solid fa-arrow-trend-up"></i> Digital Painting</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.8</div>
+                        <div class="enrolled"><i class="fa-solid fa-user-group"></i> 2,341 enrolled</div>
+                    </div>
+                    <button class="btn btn-primary full-width"><i class="fa-solid fa-book-open"></i> Start
+                        Learning</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events View -->
+        <div id="events-view" class="view-section hidden container section-padding">
+            <div class="view-header">
+                <div>
+                    <h2 class="view-title">SkillForge <span class="highlight-text">Events</span></h2>
+                    <p class="view-subtitle">Organize your own workshops or participate in community-driven creative
+                        challenges.</p>
+                </div>
+                <div class="events-toggle glass">
+                    <button class="event-tab-btn active" data-tab="participate">Upcoming Events</button>
+                    <button class="event-tab-btn" data-tab="organize">Organize Event</button>
+                </div>
+            </div>
+
+            <!-- Participate Domain -->
+            <div id="participate-domain" class="event-domain">
+                <div class="event-grid">
+                    <!-- Event Card 1 -->
+                    <div class="event-card glass">
+                        <div class="event-date-badge">
+                            <span class="day">12</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="event-content">
+                            <span class="pill pill-light">Workshop</span>
+                            <h3>AI-Enhanced Music Composition</h3>
+                            <p>Learn how to blend classical theory with generative AI tools. Led by @AI_Composer.</p>
+                            <div class="event-footer">
+                                <span><i class="fa-solid fa-users"></i> 45 Joined</span>
+                                <button class="btn btn-primary join-event-btn">Join Event</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 2 -->
+                    <div class="event-card glass">
+                        <div class="event-date-badge">
+                            <span class="day">15</span>
+                            <span class="month">Feb</span>
+                        </div>
+                        <div class="event-content">
+                            <span class="pill pill-light">Jam Session</span>
+                            <h3>Virtual Jazz Improvisation</h3>
+                            <p>Global real-time jam session for keyboardists and saxophonists.</p>
+                            <div class="event-footer">
+                                <span><i class="fa-solid fa-users"></i> 12 Joined</span>
+                                <button class="btn btn-primary join-event-btn">Join Event</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organize Domain -->
+            <div id="organize-domain" class="event-domain hidden">
+                <div class="organize-dashboard">
+                    <div class="dashboard-empty glass">
+                        <i class="fa-solid fa-calendar-plus"
+                            style="font-size: 3rem; color: #D9A066; margin-bottom: 1.5rem;"></i>
+                        <h3>Ready to Lead?</h3>
+                        <p>Host your own workshop, competition, or private coaching session.</p>
+                        <button class="btn btn-primary" id="openEventCreator" style="margin-top: 1.5rem;">
+                            <i class="fa-solid fa-plus"></i> Create New Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Portfolio Generator Modal -->
+    <div id="uploadModal" class="modal-overlay hidden">
+        <div class="modal glass portfolio-modal">
+            <button id="closeModal" class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+
+            <div class="portfolio-stepper">
+                <div class="step active" data-step="1"><span>1</span> Bio</div>
+                <div class="step" data-step="2"><span>2</span> Skills</div>
+                <div class="step" data-step="3"><span>3</span> Highlights</div>
+                <div class="step" data-step="4"><span>4</span> Preview</div>
+            </div>
+
+            <div class="modal-content">
+                <!-- Step 1: Bio -->
+                <div class="portfolio-step active" id="p-step-1">
+                    <div class="modal-header-text">
+                        <h2>Personalize Your Creative Identity</h2>
+                        <p>Tell the community about your journey and specializations.</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Your Creative Name/Alias</label>
+                        <input type="text" id="p-name" placeholder="E.g., Sarah 'The Synth' Johnson" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Hobby & Niche</label>
+                        <!-- <input type="text" id="p-niche" placeholder="E.g., Contemporary Jazz Pianist" class="input-field"> -->
+                         <select id="p-niche" class="input-field">
+                                <option value="">Select your category</option>
+                                <option value="Music">Music</option>
+                                <option value="Dance">Dance</option>
+                                <option value="Visual Art">Visual Art</option>
+                                <option value="Photography">Photography</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Short Creative Bio</label>
+                        <textarea id="p-bio" placeholder="Blending classical training with electric soul..." class="input-field textarea"></textarea>
+                    </div>
+                    <div class="step-footer">
+                        <button class="btn btn-primary next-step" data-next="2">Continue to Skills <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Skills -->
+                <div class="portfolio-step hidden" id="p-step-2">
+                    <div class="modal-header-text">
+                        <h2>Map Your Skillset</h2>
+                        <p>Highlight the techniques and tools you've mastered.</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Techniques (Separate with commas)</label>
+                        <input type="text" id="p-skills" placeholder="E.g., Improvisation, Sight Reading, Composition" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label>Tools & Platforms</label>
+                        <input type="text" id="p-tools" placeholder="E.g., Ableton Live, Logic Pro, Steinway & Sons" class="input-field">
+                    </div>
+                    <div class="step-footer">
+                        <button class="btn btn-secondary prev-step" data-prev="1">Back</button>
+                        <button class="btn btn-primary next-step" data-next="3">Continue to Highlights <i
+                                class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Highlights -->
+                <div class="portfolio-step hidden" id="p-step-3">
+                    <div class="modal-header-text">
+                        <h2>Showcase Key Works</h2>
+                        <p>Mention your proudest projects or major milestones.</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Best Project / Performance</label>
+                        <input type="text" id="p-project" placeholder="E.g., Winter Recital Soloist" class="input-field">
+                    </div>
+                    <div class="form-group">
+                        <label>A Significant Milestone</label>
+                        <input type="text" id="p-milestone" placeholder="E.g., 500+ Organic Streams on SoundCloud" class="input-field">
+                    </div>
+                    <div class="step-footer">
+                        <button class="btn btn-secondary prev-step" data-prev="2">Back</button>
+                        <button class="btn btn-primary next-step" id="generate-preview-btn" data-next="4">Preview Your
+                            Portfolio <i class="fa-solid fa-wand-magic-sparkles"></i></button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Preview -->
+                <div class="portfolio-step hidden" id="p-step-4">
+                    <div class="modal-header-text">
+                        <h2>Your Hobby Resume is Ready!</h2>
+                        <p>This is how other creators will see your profile.</p>
+                    </div>
+
+                    <div id="portfolio-preview-container">
+                        <!-- Preview Card Populated by JS -->
+                    </div>
+
+                    <div class="step-footer">
+                        <button class="btn btn-secondary prev-step" data-prev="3">Back</button>
+                        <button class="btn btn-primary" id="finalize-portfolio">Generate & Publish <i class="fa-solid fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Applied Toast Modal -->
+    <div id="appliedToast" class="toast">
+        <i class="fa-solid fa-heart toast-heart"></i>
+        <span>Applied! We're rooting for you, love!</span>
+    </div>
+
+    <script type="module" src="script.js"></script>
+    <script>
+        // Update navbar avatar with user's name from portfolio data
+        const data = JSON.parse(localStorage.getItem("portfolio"));
+        const navAvatar = document.querySelector('.profile-avatar img');
+        if (navAvatar && data && data.name) {
+            navAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.name)}&background=random`;
+        }
+    </script>
+</body>
+
+</html>

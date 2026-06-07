@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.register-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+.register-container h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-weight: 600;
+}
+.register-container input {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+.register-container button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.register-container button:hover {
+    background: linear-gradient(135deg, #e083eb, #e5475c);
+}
+#regError {
+    color: red;
+    margin-top: 0.5rem;
+}
+.register-container p {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+.register-container a {
+    color: #f093fb;
+    text-decoration: none;
+}
+.register-container a:hover {
+    text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Create Account</h2>
+    <input type="text" id="regName" placeholder="Full Name">
+    <input type="email" id="regEmail" placeholder="Email">
+    <input type="password" id="regPassword" placeholder="Password">
+    <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
+    <button id="doRegister">Register</button>
+    <p id="regError"></p>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+</div>
+
+<script type="module">
+import { database, ref, set, get, child } from './firebase.js';
+
+const doRegisterBtn = document.getElementById('doRegister');
+const regError = document.getElementById('regError');
+
+doRegisterBtn.addEventListener('click', () => {
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const password = document.getElementById('regPassword').value;
+    const confirmPassword = document.getElementById('regConfirmPassword').value;
+
+    if (!name || !email || !password || !confirmPassword) {
+        regError.textContent = "All fields are required!";
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        regError.textContent = "Passwords do not match!";
+        return;
+    }
+
+    const userId = email.replace(/\./g, "_"); // Firebase path-safe ID
+
+    get(child(ref(database), 'users/' + userId))
+    .then((snapshot) => {
+        if (snapshot.exists()) {
+            regError.textContent = "User already exists!";
+        } else {
+            set(ref(database, 'users/' + userId), {
+                name: name,
+                email: email,
+                password: password
+            }).then(() => {
+                alert("Account created successfully! You can now login.");
+                window.location.href = "login.html";
+            }).catch(() => {
+                regError.textContent = "Error saving data!";
+            });
+        }
+    }).catch(() => {
+        regError.textContent = "Error reading database!";
+    });
+});
+</script>
+</body>
+</html>
